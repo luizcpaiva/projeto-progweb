@@ -5,15 +5,15 @@ O tema é um sistema de e-commerce para venda de produtos de beleza.
 
 ## Requisitos Atendidos (Checkpoint 1)
 
-* [cite_start][x] Modelagem Completa (Produtos, Categorias, Pedidos) 
-* [cite_start][x] Ambiente Administrativo funcional (via Django Admin) [cite: 5, 15]
-* [cite_start][x] Uso de Git e GitHub com documentação 
-* [cite_start][x] Banco de dados relacional (Django ORM / SQLite) 
+*  Modelagem Completa (Produtos, Categorias, Pedidos) 
+*  Ambiente Administrativo funcional (via Django Admin)
+*  Uso de Git e GitHub com documentação 
+*  Banco de dados relacional (Django ORM / SQLite) 
 
 ## Requisitos Atendidos (Checkpoint 2)
 
-* [cite_start][x] Framework CSS (Bootstrap) para interface responsiva 
-* [cite_start][x] Ambiente para o usuário protegido com login/senha 
+*  Framework CSS (Bootstrap) para interface responsiva 
+*  Ambiente para o usuário protegido com login/senha 
 
 ## Como Rodar (Localmente)
 
