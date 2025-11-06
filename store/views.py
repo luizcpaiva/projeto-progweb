@@ -89,3 +89,19 @@ def clear_cart(request):
         pass
 
     return redirect('cart_detail')
+
+@login_required(login_url='/contas/login/')
+def checkout(request):
+    try:
+        pedido = Pedido.objects.get(usuario=request.user, status='pendente')
+
+        pedido.status = 'pago' 
+        pedido.save()
+
+        return redirect('checkout_success')
+
+    except Pedido.DoesNotExist:
+        return redirect('cart_detail')
+    
+def checkout_success(request):
+    return render(request, 'cart/checkout_success.html')
