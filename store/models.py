@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User 
+from django.urls import reverse
 
 class Categoria(models.Model):
     nome = models.CharField(max_length=100, unique=True)
@@ -11,6 +12,9 @@ class Categoria(models.Model):
 
     def __str__(self):
         return self.nome
+    
+    def get_absolute_url(self):
+        return reverse('product_list_by_category', args=[self.slug])
 
 class Produto(models.Model):
     categoria = models.ForeignKey(Categoria, related_name='produtos', on_delete=models.SET_NULL, null=True, blank=True)
