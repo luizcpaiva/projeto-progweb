@@ -77,3 +77,15 @@ def cart_detail(request):
         'itens': itens
     }
     return render(request, 'cart/cart_detail.html', context)
+
+@login_required(login_url='/contas/login/')
+def clear_cart(request):
+    try:
+        pedido = Pedido.objects.get(usuario=request.user, status='pendente')
+
+        pedido.delete()
+
+    except Pedido.DoesNotExist:
+        pass
+
+    return redirect('cart_detail')
