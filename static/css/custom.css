@@ -1,0 +1,17 @@
+.card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.03); 
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.card-body a.btn {
+    text-decoration: none;
+}
+
+.list-group-item-action:hover {
+    background-color: #f8f9fa; 
+}
