@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Produto, Categoria
+from .models import Produto, Categoria, Pedido, ItemPedido
 from django.contrib.auth import login
 from .forms import RegisterForm
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
 def index(request, category_slug=None):
     categoria_atual = None
@@ -32,7 +34,31 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('index')
+            return redirect('product_list')
     else:
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form': form})
+
+@login_required(login_url='/contas/login/')
+def add_to_cart(request, produto_id):
+    produto = get_object_or_404(Produto, id=produto_id)
+
+    if request.user.is_superuser:
+        return HttpResponseForbidden("Administradores não podem adicionar itens ao carrinho.")
+
+    pedido, criado = Pedido.objects.get_or_create(
+        usuario=request.user,
+        status='pendente'
+    )
+
+    item, item_criado = ItemPedido.objects.get_or_create(
+        pedido=pedido,
+        produto=produto,
+        defaults={'preco': produto.preco} 
+    )
+
+    if not item_criado:
+        item.quantidade += 1
+        item.save()
+
+    return redirect('product_list')

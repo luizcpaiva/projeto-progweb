@@ -41,7 +41,7 @@
                         <h5 class="card-title">{{ produto.nome }}</h5>
                         <p class="card-text">{{ produto.descricao|truncatewords:15 }}</p>
                         <h6 class="card-subtitle mb-2 text-success">R$ {{ produto.preco }}</h6>
-                        <a href="#" class="btn btn-primary mt-auto">Adicionar ao Carrinho</a>
+                        <a href="{% url 'add_to_cart' produto.id %}" class="btn btn-primary mt-auto">Adicionar ao Carrinho</a>
                     </div>
                 </div>
             </div>
