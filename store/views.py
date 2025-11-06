@@ -62,3 +62,18 @@ def add_to_cart(request, produto_id):
         item.save()
 
     return redirect('product_list')
+
+@login_required(login_url='/contas/login/')
+def cart_detail(request):
+    try:
+        pedido = Pedido.objects.get(usuario=request.user, status='pendente')
+        itens = ItemPedido.objects.filter(pedido=pedido)
+    except Pedido.DoesNotExist:
+        pedido = None
+        itens = []
+
+    context = {
+        'pedido': pedido,
+        'itens': itens
+    }
+    return render(request, 'cart/cart_detail.html', context)

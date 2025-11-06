@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Seu Carrinho de Compras</h2>
+
+{% if not itens %}
+    <p class="lead">Seu carrinho está vazio.</p>
+    <a href="{% url 'product_list' %}" class="btn btn-primary">Começar a Comprar</a>
+{% else %}
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th scope="col">Produto</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in itens %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        {% if item.produto.imagem %}
+                        <img src="{{ item.produto.imagem.url }}" alt="{{ item.produto.nome }}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 15px;">
+                        {% endif %}
+                        {{ item.produto.nome }}
+                    </div>
+                </td>
+                <td>R$ {{ item.preco }}</td>
+                <td>
+                    {{ item.quantidade }}
+                    </td>
+                <td>R$ {{ item.get_total }}</td>
+            </tr>
+            {% endfor %}
+
+            <tr class="table-light">
+                <td colspan="3" class="text-end"><strong>Total do Pedido:</strong></td>
+                <td><strong>R$ {{ pedido.get_total_pedido }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-end">
+        <a href="#" class="btn btn-secondary">Limpar Carrinho</a>
+        <a href="#" class="btn btn-success btn-lg">Finalizar Compra</a>
+    </div>
+{% endif %}
+{% endblock %}
