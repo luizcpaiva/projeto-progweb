@@ -2,23 +2,27 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Produto, Categoria
 from django.contrib.auth import login
 from .forms import RegisterForm
+from django.db.models import Q
 
 def index(request, category_slug=None):
     categoria_atual = None
-    if category_slug:
-        categoria_atual = get_object_or_404(Categoria, slug=category_slug)
-
     categorias = Categoria.objects.all()
 
-    if categoria_atual:
-        produtos = Produto.objects.filter(categoria=categoria_atual, disponivel=True)
-    else:
-        produtos = Produto.objects.filter(disponivel=True)
+    produtos = Produto.objects.filter(disponivel=True)
+
+    query = request.GET.get('q')
+    if query:
+        produtos = produtos.filter(Q(nome__icontains=query) | Q(descricao__icontains=query))
+
+    if category_slug:
+        categoria_atual = get_object_or_404(Categoria, slug=category_slug)
+        produtos = produtos.filter(categoria=categoria_atual)
 
     context = {
         'produtos': produtos,
         'categorias': categorias,
-        'categoria_atual': categoria_atual
+        'categoria_atual': categoria_atual,
+        'query': query # Envia o termo de busca de volta para o template
     }
     return render(request, 'index.html', context)
 

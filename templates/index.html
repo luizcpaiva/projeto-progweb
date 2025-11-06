@@ -17,14 +17,16 @@
     </div>
 
     <div class="col-md-9">
+        
         <h2 class="mb-4">
             {% if categoria_atual %}
                 {{ categoria_atual.nome }}
+            {% elif query %}
+                Resultados para: "{{ query }}"
             {% else %}
                 Nossos Produtos
             {% endif %}
         </h2>
-
         <div class="row">
             {% for produto in produtos %}
             <div class="col-md-6 col-lg-4 mb-4">
@@ -34,7 +36,7 @@
                     {% else %}
                         <img src="https://via.placeholder.com/300x200.png?text=Sem+Imagem" class="card-img-top" alt="Sem Imagem">
                     {% endif %}
-
+                    
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ produto.nome }}</h5>
                         <p class="card-text">{{ produto.descricao|truncatewords:15 }}</p>
@@ -44,7 +46,7 @@
                 </div>
             </div>
             {% empty %}
-            <p>Nenhum produto encontrado nesta categoria.</p>
+            <p>Nenhum produto encontrado.</p>
             {% endfor %}
         </div>
     </div>

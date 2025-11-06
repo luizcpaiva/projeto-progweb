@@ -18,6 +18,11 @@ aria-label="Toggle navigation">
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNav">
+                
+                <form class="d-flex mx-auto" action="{% url 'product_list' %}" method="get">
+                    <input class="form-control me-2" type="search" name="q" placeholder="Buscar produtos..." aria-label="Buscar" value="{{ query|default:'' }}">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#">Carrinho (0)</a>
@@ -36,7 +41,7 @@ aria-label="Toggle navigation">
                                 </button>
                             </form>
                         </li>
-                        {% else %}
+                    {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">Login</a>
                         </li>
