@@ -25,7 +25,7 @@ aria-label="Toggle navigation">
                 </form>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'cart_detail' %}">Carrinho (0)</a>
+                        <a class="nav-link" href="{% url 'cart_detail' %}">Carrinho ({{ cart_item_count }})</a>
                     </li>
                     
                     {% if user.is_authenticated %}
