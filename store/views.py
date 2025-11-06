@@ -105,3 +105,16 @@ def checkout(request):
     
 def checkout_success(request):
     return render(request, 'cart/checkout_success.html')
+
+@login_required(login_url='/contas/login/')
+def order_history(request):
+    pedidos = Pedido.objects.filter(
+        usuario=request.user
+    ).exclude(
+        status='pendente'
+    ).order_by('-criado_em') 
+
+    context = {
+        'pedidos': pedidos
+    }
+    return render(request, 'cart/order_history.html', context)

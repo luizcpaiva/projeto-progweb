@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Meus Pedidos</h2>
+
+{% if not pedidos %}
+    <p class="lead">Você ainda não finalizou nenhum pedido.</p>
+    <a href="{% url 'product_list' %}" class="btn btn-primary">Começar a Comprar</a>
+{% else %}
+    <div class="accordion" id="pedidosAccordion">
+        {% for pedido in pedidos %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-{{ pedido.id }}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ pedido.id }}" aria-expanded="false" aria-controls="collapse-{{ pedido.id }}">
+                    <strong>Pedido #{{ pedido.id }}</strong> - 
+                    Data: {{ pedido.criado_em|date:"d/m/Y" }} - 
+                    Status: {{ pedido.get_status_display }} - 
+                    Total: R$ {{ pedido.get_total_pedido }}
+                </button>
+            </h2>
+            <div id="collapse-{{ pedido.id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ pedido.id }}" data-bs-parent="#pedidosAccordion">
+                <div class="accordion-body">
+                    <h6>Itens deste pedido:</h6>
+                    <ul class="list-group">
+                        {% for item in pedido.itens.all %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ item.produto.nome }} ({{ item.quantidade }}x)
+                                <span>R$ {{ item.get_total }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

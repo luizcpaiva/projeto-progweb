@@ -23,6 +23,7 @@ aria-label="Toggle navigation">
                     <input class="form-control me-2" type="search" name="q" placeholder="Buscar produtos..." aria-label="Buscar" value="{{ query|default:'' }}">
                     <button class="btn btn-outline-success" type="submit">Buscar</button>
                 </form>
+
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'cart_detail' %}">Carrinho ({{ cart_item_count }})</a>
@@ -31,6 +32,10 @@ aria-label="Toggle navigation">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
                             <span class="nav-link text-light">Olá, {{ user.username }}!</span>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'order_history' %}">Meus Pedidos</a>
                         </li>
                         
                         <li class="nav-item">
